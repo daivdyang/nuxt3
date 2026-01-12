@@ -6,5 +6,6 @@
 <style scoped>
 div {
   background-color: lightgreen;
+  border: 5px solid green;
 }
 </style>

@@ -12,7 +12,9 @@
 <script setup lang="ts">
 const show = ref(false)
 
+const resHeader = useResponseHeader('x-from-counter')
+resHeader.value = 'counter-page'
 function handleEvent(type: string) {
-  console.log(`trigger ${type}`)
+  console.log(`trigger ${type}`, resHeader.value)
 }
 </script>

@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  plugins: ['~/plugins/test.ts'],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   app: {
@@ -10,5 +11,12 @@ export default defineNuxtConfig({
   },
   devServer: {
     port: 3333,
+  },
+  nitro: {
+    experimental: {
+      websocket: true,
+      tasks: true
+    },
+    scheduledTasks: { "*/30 * * * * *": ['log'] }
   }
 })
