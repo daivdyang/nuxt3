@@ -8,6 +8,8 @@
     </template>
   </Suspense>
   <LazyCounterComp1 :hydrate-after="5000" />
+  <NuxtLink to="/ws_test">Go to Websocket Page</NuxtLink>
+  <NuxtLink to="/about">Go to About Page</NuxtLink>
 </template>
 <script setup lang="ts">
 const show = ref(false)

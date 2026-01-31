@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  plugins: ['~/plugins/test.ts'],
+  plugins: ['~/plugins/test.server.ts'],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
 
@@ -14,6 +14,12 @@ export default defineNuxtConfig({
 
   devServer: {
     port: 3333,
+  },
+
+  runtimeConfig: {
+    public: {
+      googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID,
+    }
   },
 
   nitro: {
