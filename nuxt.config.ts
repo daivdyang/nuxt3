@@ -30,5 +30,5 @@ export default defineNuxtConfig({
     scheduledTasks: { "*/30 * * * * *": ['log'] }
   },
 
-  modules: ['@pinia/nuxt']
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n']
 })
