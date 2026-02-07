@@ -36,10 +36,15 @@ export default defineEventHandler(async (event) => {
       // 3. (商業邏輯) 在這裡查詢資料庫
       // const user = await db.findUserByEmail(payload.email);
       // if (!user) { ... 建立新帳號 ... }
-
+      const token = crypto.randomUUID() // 模擬建立一個新的 Token
       // 4. (商業邏輯) 建立你自己的系統 Session 或 JWT
       // const myAppToken = createMyAppJwt(user);
-
+      setCookie(event, 'my_app_token', token, {
+        maxAge: 60 * 60 * 24 * 30, // 30 天
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax'
+      })
       // 5. 回傳成功訊息給前端
       return {
           success: true,
@@ -49,11 +54,11 @@ export default defineEventHandler(async (event) => {
               email: payload?.email ?? '沒有信箱',
               picture: payload?.picture ?? '',
           },
-          token: crypto.randomUUID() // 通常會回傳你自己系統的 Token
+          token
       };
 
   } catch (error) {
       console.error("Token 驗證失敗:", error);
-      return { success: false, message: "無效的 Google Token" };
+      return { success: false, message: "無效的 Google Token", user: null };
   }
 })

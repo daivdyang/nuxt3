@@ -1,11 +1,11 @@
 <template>
   <div>
     <NuxtLayout>
-      <div>
+      <!-- <div>
         <p>Count: {{ counter }}</p>
         <button @click="handleClick">Increment</button>
         <button @click="handleChangeLayout">change layout</button>
-      </div>
+      </div> -->
       <NuxtPage />
     </NuxtLayout>
   </div>

@@ -1,10 +1,11 @@
 <template>
-  <div v-show="!isLogin" id="googleButtonDiv" data-auto_select="false">Login with Google</div>
-  <button v-show="isLogin" @click="handleLogout">Logout Google</button>
-  <div>{{ `狀態: ${loginInfo}` }}</div>
+  <div v-show="!userStore.isLogin" id="googleButtonDiv" data-auto_select="false">Login with Google</div>
+  <button v-show="userStore.isLogin" @click="handleLogout">Logout Google</button>
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '~/store/user'
+
 useHead({
   script: [
     {
@@ -15,8 +16,7 @@ useHead({
   ]
 })
 
-const isLogin = ref(false)
-const loginInfo = ref<string>('未登入')
+const userStore = useUserStore()
 const config = useRuntimeConfig()
 
 // 初始化 Google Sign-In 按鈕
@@ -45,6 +45,13 @@ async function initGoogleSignIn() {
 // 處理 Google 回傳的 Credential
 async function handleCredentialResponse(response: any) {
   console.log("Encoded JWT ID token: " + response.credential, response);
+  // response.credential 是 Google 回傳的 JWT Token，裡面包含使用者資訊
+  // {
+  //   "clientId": "xxx.apps.googleusercontent.com",
+  //   "client_id": "xxx.apps.googleusercontent.com",
+  //   "credential": "{Google JWT Token}",
+  //   "select_by": "btn"
+  // }
 
   // 將 Token 發送至後端 API
   try {
@@ -54,12 +61,14 @@ async function handleCredentialResponse(response: any) {
         token: response.credential
       }
     })
-    
-    console.log('後端驗證成功:', data)
-    loginInfo.value = JSON.stringify(data)
-    isLogin.value = true
-    // 登入成功後的轉導或狀態存儲
-    // navigateTo('/dashboard') 
+    if (data.success && data.user) {
+      console.log('後端驗證成功:', data)
+      // 登入成功後的轉導或狀態存儲
+      userStore.setUserInfo(data.user)
+      navigateTo('/dashboard') 
+    } else {
+      console.error('後端驗證失敗:')
+    }
   } catch (err) {
     console.error('請求錯誤:', err)
     alert('登入失敗，請稍後再試')

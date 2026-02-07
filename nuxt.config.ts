@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+const buildTime = new Date().toISOString()
+
 export default defineNuxtConfig({
   plugins: ['~/plugins/test.server.ts'],
   compatibilityDate: '2024-11-01',
@@ -19,6 +22,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID,
+      buildTime,
     }
   },
 
