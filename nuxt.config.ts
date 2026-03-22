@@ -12,8 +12,10 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/hello': { swr: 10 }
+    '/hello': { swr: 10 } // Stale-While-Revalidate: cache the page for 10 seconds, and revalidate in the background
   },
+
+  debug: process.env.NODE_ENV === 'development', // open debug mode to see more detailed logs
 
   devServer: {
     port: 3333,
@@ -31,7 +33,7 @@ export default defineNuxtConfig({
       websocket: true,
       tasks: true
     },
-    scheduledTasks: { "*/30 * * * * *": ['log'] }
+    // scheduledTasks: { "*/30 * * * * *": ['log'] } // Schedule a task to run every 30 seconds, and the task handler is defined in server/middleware/log.ts
   },
 
   modules: ['@pinia/nuxt', '@nuxtjs/i18n']

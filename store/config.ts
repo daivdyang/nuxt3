@@ -3,7 +3,7 @@ export const useConfig = defineStore('config', () => {
 
   async function fetchConfig() {
     try {
-      const headers = useRequestHeaders(['cookie'])
+      const headers = useRequestHeaders(['cookie', 'user-agent'])
       console.log('Fetching "config" with headers:', headers)
       const data = await $fetch<{a: string, b: string, c: number[], d: {x: number, y: number}}>('/api/config', { headers })
       config.value = { ...config.value, ...data }

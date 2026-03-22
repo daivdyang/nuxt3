@@ -84,7 +84,6 @@ async function handleLogout () {
   // 2. 清除前端儲存的 Token 或 User 資訊
   const tokenCookie = useCookie('auth_token') // 假設 Token 存在 Cookie
   tokenCookie.value = null // 清除 Cookie
-  loginInfo.value = '未登入'
 
   // 3. 通知 Google 取消自動選取
   // 確保 window.google 已載入
@@ -93,7 +92,7 @@ async function handleLogout () {
     // @ts-ignore
     window.google.accounts.id.disableAutoSelect()
     console.log('Google Auto Select Disabled')
-    isLogin.value = false
+    userStore.clearUserInfo() // 清除使用者資訊
   }
 
   // 4. 轉導回登入頁面或其他頁面
