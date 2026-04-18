@@ -22,3 +22,6 @@ logs
 .env
 .env.*
 !.env.example
+
+# 忽略 Google OAuth 等機密 JSON 檔案
+SSO/google/*.json
